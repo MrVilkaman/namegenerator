@@ -1,7 +1,7 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.activities;
 
+import com.github.mrvilkaman.namegenerator.presentationlayer.fragment.hello.HelloScreenFragment;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
-import com.github.mrvilkaman.namegenerator.presentationlayer.hello.HelloScreenFragment;
 import com.github.mrvilkaman.namegenerator.presentationlayer.utils.IToolbar;
 
 /**

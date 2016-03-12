@@ -57,6 +57,7 @@ dependencies {
     compile libraries.materialDialog
     compile libraries.materialProgress
 
+    compile libraries.vksdk
 
     //tests
     testCompile libraries.junit
