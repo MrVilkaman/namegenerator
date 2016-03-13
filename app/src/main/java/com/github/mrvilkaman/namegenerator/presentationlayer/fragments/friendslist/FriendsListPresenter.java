@@ -13,6 +13,7 @@ import java.util.Collections;
 public class FriendsListPresenter extends BasePresenter<FriendsListView> {
 
 	public void loadFiends() {
-		view().bindFriends(Arrays.asList(new Friend(),new Friend(),new Friend()));
+
+		view().bindFriends(Arrays.asList(new Friend(1,"Имя Фамилия"),new Friend(2,"Имя Фамилия"),new Friend(3,"Имя Фамилия")));
 	}
 }
