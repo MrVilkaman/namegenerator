@@ -47,6 +47,7 @@ configurations.all {
 dependencies {
     compile libraries.supportAnnotations
     compile libraries.supportAppCompat
+    compile libraries.supportRecyclerView
 
     compile libraries.butterKnife
 

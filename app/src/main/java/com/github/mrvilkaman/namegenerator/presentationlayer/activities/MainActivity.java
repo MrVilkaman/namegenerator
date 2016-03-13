@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.activities;
 
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
+import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.friendslist.FriendsListScreenFragment;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.hello.HelloScreenFragment;
 import com.github.mrvilkaman.namegenerator.presentationlayer.utils.IToolbar;
 
@@ -16,7 +17,7 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	protected BaseFragment createStartFragment() {
-		return HelloScreenFragment.open();
+		return FriendsListScreenFragment.open();
 	}
 
 	@Override

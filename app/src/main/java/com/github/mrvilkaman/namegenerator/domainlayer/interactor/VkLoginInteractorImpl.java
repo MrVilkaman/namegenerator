@@ -8,7 +8,6 @@ import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKServiceActivity;
-import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.model.VKScopes;
 
 import java.util.ArrayList;

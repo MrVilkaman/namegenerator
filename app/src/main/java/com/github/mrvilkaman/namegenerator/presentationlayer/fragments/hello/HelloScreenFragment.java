@@ -41,6 +41,7 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 
 	@Override
 	public HelloScreenPresenter newPresenter() {
+		//// TODO: 13.03.16 change it
 		return new HelloScreenPresenter(new VkLoginInteractorImpl(this), new TokenInteractorImpl(new LocalStorageImpl(getContext())));
 	}
 
