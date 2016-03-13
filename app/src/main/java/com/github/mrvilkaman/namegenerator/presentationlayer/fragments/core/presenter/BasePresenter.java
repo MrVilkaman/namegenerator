@@ -2,7 +2,6 @@ package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.pre
 
 import android.content.Context;
 
-import com.github.mrvilkaman.namegenerator.R;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseView;
 
 import rx.Observable;
@@ -37,7 +36,7 @@ public abstract class BasePresenter<V extends BaseView> {
 	protected void onViewDetached() {
 	}
 
-	public final V getView() {
+	public final V view() {
 		return view;
 	}
 
@@ -65,27 +64,27 @@ public abstract class BasePresenter<V extends BaseView> {
 
 	public void handleError(Throwable throwable) {
 
-		getView().hideProgress();
+		view().hideProgress();
 		// Use in Retrofit
 //		if (throwable instanceof RetrofitError) {
 //			RetrofitError error = (RetrofitError) throwable;
 //			if (error.getKind() == RetrofitError.Kind.NETWORK) {
-//				getView().showToast(R.string.dialog_internet_error);
+//				view().showToast(R.string.dialog_internet_error);
 //			} else if (error.getKind() == RetrofitError.Kind.HTTP) {
 //				Response response = error.getResponse();
 //				if (response != null) {
 //					handleHttpError(error, response.getStatus());
 //				} else {
-//					getView().showMessage(error.getMessage());
+//					view().showMessage(error.getMessage());
 //				}
 //			}
 //			if (error.getKind() == RetrofitError.Kind.UNEXPECTED ||
 //					error.getKind() == RetrofitError.Kind.CONVERSION) {
-//				getView().showMessage(error.getMessage());
+//				view().showMessage(error.getMessage());
 //			}
 //		} else
 		{
-			getView().showToast(throwable.getMessage());
+			view().showToast(throwable.getMessage());
 		}
 
 	}
@@ -93,7 +92,7 @@ public abstract class BasePresenter<V extends BaseView> {
 //	protected void handleHttpError(RetrofitError error, int status) {
 //		switch (status) {
 //			case 401:
-//				getView().showMessage(R.string.dialog_invalid_token);
+//				view().showMessage(R.string.dialog_invalid_token);
 //				break;
 //		}
 //	}

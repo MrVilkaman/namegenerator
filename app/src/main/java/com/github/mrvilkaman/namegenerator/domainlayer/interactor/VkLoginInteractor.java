@@ -1,4 +1,4 @@
-package com.github.mrvilkaman.namegenerator.presentationlayer.fragment.hello;
+package com.github.mrvilkaman.namegenerator.domainlayer.interactor;
 
 import android.content.Intent;
 
@@ -8,7 +8,7 @@ import com.vk.sdk.VKCallback;
 /**
  * Created by root on 12.03.16.
  */
-public interface IHelloModel {
+public interface VkLoginInteractor {
 
 	void sendVkLoginRequest();
 

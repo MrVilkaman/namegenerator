@@ -1,4 +1,4 @@
-package com.github.mrvilkaman.namegenerator.presentationlayer.fragment.hello;
+package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.hello;
 
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseView;
 
@@ -8,4 +8,9 @@ import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view
 
 public interface HelloScreenView extends BaseView {
 
+	void showViewNext();
+
+	void showViewLogin();
+
+	void goToMainScreen();
 }
