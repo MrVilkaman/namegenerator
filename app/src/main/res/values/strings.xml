@@ -1,3 +1,10 @@
 <resources>
 	<string name="app_name">Name Generator</string>
+	<integer name="com_vk_sdk_AppId">5349772</integer>
+
+	<string name="hello_title_next">Нажмите \"Продолжить\" для начала работы</string>
+	<string name="hello_title_need_login">Нужно авторизироваться</string>
+	<string name="hello_btn_next">Продолжить</string>
+	<string name="hello_btn_login">Авторизироваться</string>
+
 </resources>

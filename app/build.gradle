@@ -47,6 +47,7 @@ configurations.all {
 dependencies {
     compile libraries.supportAnnotations
     compile libraries.supportAppCompat
+    compile libraries.supportRecyclerView
 
     compile libraries.butterKnife
 
@@ -57,6 +58,7 @@ dependencies {
     compile libraries.materialDialog
     compile libraries.materialProgress
 
+    compile libraries.vksdk
 
     //tests
     testCompile libraries.junit
