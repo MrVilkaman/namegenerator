@@ -3,7 +3,9 @@ package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.friendsl
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.DefaultSubscriber;
 import com.github.mrvilkaman.namegenerator.domainlayer.usecase.GetUserListInteractor;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.presenter.BasePresenter;
+import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseView;
 import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
+import com.github.mrvilkaman.namegenerator.presentationlayer.utils.LoadSubscriber;
 
 import java.util.List;
 
@@ -21,26 +23,23 @@ public class FriendsListPresenter extends BasePresenter<FriendsListView> {
 
 	public void loadFiends() {
 		view().showProgress();
-		getUserList.execute(new UserListSubscriber());
-
-//		view().renderFriendsList(Arrays.asList(new Friend(1,"Имя Фамилия"),new Friend(2,"Имя Фамилия"),new Friend(3,"Имя Фамилия")));
+		getUserList.execute(new UserListSubscriber(view()));
 	}
-	private final class UserListSubscriber extends DefaultSubscriber<List<Friend>> {
+
+	@Override
+	protected void onViewDetached() {
+		getUserList.unsubscribe();
+	}
+
+	private final class UserListSubscriber extends LoadSubscriber<List<Friend>> {
+
+		public UserListSubscriber(BaseView view) {
+			super(view);
+		}
 
 		@Override
 		public void onNext(List<Friend> friends) {
 			view().renderFriendsList(friends);
-		}
-
-		@Override
-		public void onError(Throwable e) {
-			view().hideProgress();
-			view().showError(e);
-		}
-
-		@Override
-		public void onCompleted() {
-			view().hideProgress();
 		}
 	}
 }
