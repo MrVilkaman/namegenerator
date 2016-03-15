@@ -10,9 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.github.mrvilkaman.namegenerator.R;
-import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProviders;
-import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProvidersFactory;
-import com.github.mrvilkaman.namegenerator.domainlayer.usecase.GetUserListInteractor;
+import com.github.mrvilkaman.namegenerator.domainlayer.usecase.UseCaseFactory;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.MySimpleAdapter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
 import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
@@ -68,7 +66,6 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 
 	@Override
 	public FriendsListPresenter newPresenter() {
-		DataProviders dataProviders = DataProvidersFactory.get();
-		return new FriendsListPresenter(new GetUserListInteractor(dataProviders.getFriendDataProvider(), dataProviders.getSchedulersProvider()));
+		return new FriendsListPresenter(UseCaseFactory.getUserListInteractor());
 	}
 }

@@ -1,8 +1,9 @@
-package com.github.mrvilkaman.namegenerator.domainlayer.interactor;
+package com.github.mrvilkaman.namegenerator.datalayer.interactor;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
+import com.github.mrvilkaman.namegenerator.domainlayer.interactor.VkLoginInteractor;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKScope;

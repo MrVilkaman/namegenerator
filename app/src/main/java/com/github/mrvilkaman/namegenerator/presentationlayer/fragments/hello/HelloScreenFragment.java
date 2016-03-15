@@ -10,9 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.mrvilkaman.namegenerator.R;
-import com.github.mrvilkaman.namegenerator.datalayer.LocalStorageImpl;
-import com.github.mrvilkaman.namegenerator.domainlayer.interactor.TokenInteractorImpl;
-import com.github.mrvilkaman.namegenerator.domainlayer.interactor.VkLoginInteractorImpl;
+import com.github.mrvilkaman.namegenerator.domainlayer.interactor.InteractorFactory;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
 
 import butterknife.Bind;
@@ -41,8 +39,7 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 
 	@Override
 	public HelloScreenPresenter newPresenter() {
-		//// TODO: 13.03.16 change it
-		return new HelloScreenPresenter(new VkLoginInteractorImpl(this), new TokenInteractorImpl(new LocalStorageImpl(getContext())));
+		return new HelloScreenPresenter(InteractorFactory.getVkLoginInteractor(this),InteractorFactory.getTokenInteractor());
 	}
 
 	@OnClick(R.id.hello_login_btn)

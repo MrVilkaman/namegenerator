@@ -5,6 +5,7 @@ package com.github.mrvilkaman.namegenerator.domainlayer.providers;
  */
 public interface DataProviders {
 
+	SessionDataProvider getSessionDataProvider();
 	SchedulersProvider getSchedulersProvider();
 	FriendDataProvider getFriendDataProvider();
 }

@@ -1,7 +1,6 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.friendslist;
 
-import com.github.mrvilkaman.namegenerator.domainlayer.providers.DefaultSubscriber;
-import com.github.mrvilkaman.namegenerator.domainlayer.usecase.GetUserListInteractor;
+import com.github.mrvilkaman.namegenerator.domainlayer.usecase.UseCase;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.presenter.BasePresenter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseView;
 import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
@@ -15,20 +14,20 @@ import java.util.List;
 
 public class FriendsListPresenter extends BasePresenter<FriendsListView> {
 
-	private final GetUserListInteractor getUserList;
+	private final UseCase getUserListUseCase;
 
-	public FriendsListPresenter(GetUserListInteractor getUserList) {
-		this.getUserList = getUserList;
+	public FriendsListPresenter(UseCase getUserListUseCase) {
+		this.getUserListUseCase = getUserListUseCase;
 	}
 
 	public void loadFiends() {
 		view().showProgress();
-		getUserList.execute(new UserListSubscriber(view()));
+		getUserListUseCase.execute(new UserListSubscriber(view()));
 	}
 
 	@Override
 	protected void onViewDetached() {
-		getUserList.unsubscribe();
+		getUserListUseCase.unsubscribe();
 	}
 
 	private final class UserListSubscriber extends LoadSubscriber<List<Friend>> {

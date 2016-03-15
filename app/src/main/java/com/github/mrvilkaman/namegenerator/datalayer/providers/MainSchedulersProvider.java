@@ -1,4 +1,6 @@
-package com.github.mrvilkaman.namegenerator.domainlayer.providers;
+package com.github.mrvilkaman.namegenerator.datalayer.providers;
+
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.SchedulersProvider;
 
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;

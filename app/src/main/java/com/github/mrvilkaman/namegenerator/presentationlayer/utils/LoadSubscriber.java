@@ -1,6 +1,6 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.utils;
 
-import com.github.mrvilkaman.namegenerator.domainlayer.providers.DefaultSubscriber;
+import com.github.mrvilkaman.namegenerator.datalayer.providers.DefaultSubscriber;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseView;
 
 import java.lang.ref.WeakReference;

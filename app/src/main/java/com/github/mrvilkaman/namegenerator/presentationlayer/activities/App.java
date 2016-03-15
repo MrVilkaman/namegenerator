@@ -4,7 +4,7 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProvidersFactory;
-import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProvidersImpl;
+import com.github.mrvilkaman.namegenerator.datalayer.providers.DataProvidersImpl;
 import com.vk.sdk.VKSdk;
 
 /**
@@ -22,6 +22,6 @@ public class App extends Application {
 
 	@NonNull
 	protected DataProvidersImpl getSourceFactory() {
-		return new DataProvidersImpl();
+		return new DataProvidersImpl(this);
 	}
 }

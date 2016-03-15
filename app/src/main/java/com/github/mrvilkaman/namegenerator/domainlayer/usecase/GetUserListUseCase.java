@@ -8,11 +8,11 @@ import rx.Observable;
 /**
  * Created by root on 15.03.16.
  */
-public class GetUserListInteractor extends UseCase {
+public class GetUserListUseCase extends UseCase {
 
 	private final FriendDataProvider friendProvider;
 
-	public GetUserListInteractor(FriendDataProvider friendProvider, SchedulersProvider provider) {
+	public GetUserListUseCase(FriendDataProvider friendProvider, SchedulersProvider provider) {
 		super(provider.io(), provider.mainThread());
 		this.friendProvider = friendProvider;
 	}

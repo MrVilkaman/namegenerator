@@ -10,6 +10,7 @@ public class DataProvidersFactory implements DataProviders {
 	private static DataProviders sourceFactory;
 	private SchedulersProvider schedulersProvider;
 	private FriendDataProvider friendDataProvider;
+	private SessionDataProvider sessionDataProvider;
 
 	private DataProvidersFactory() {
 	}
@@ -33,6 +34,15 @@ public class DataProvidersFactory implements DataProviders {
 	private void clear() {
 		schedulersProvider = null;
 		friendDataProvider = null;
+		sessionDataProvider = null;
+	}
+
+	@Override
+	public SessionDataProvider getSessionDataProvider() {
+		if (sessionDataProvider == null) {
+			sessionDataProvider = sourceFactory.getSessionDataProvider();
+		}
+		return sessionDataProvider;
 	}
 
 	@Override
