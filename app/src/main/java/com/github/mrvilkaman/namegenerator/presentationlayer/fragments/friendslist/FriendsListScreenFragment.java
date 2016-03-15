@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.github.mrvilkaman.namegenerator.R;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.FriendDataProvider;
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.MainSchedulersProvider;
 import com.github.mrvilkaman.namegenerator.domainlayer.usecase.GetUserListInteractor;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.MySimpleAdapter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
@@ -18,6 +19,7 @@ import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import rx.Observable;
@@ -72,7 +74,7 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 	@Override
 	public FriendsListPresenter newPresenter() {
 		FriendDataProvider friendDataProvider = () -> Observable.just(
-				Arrays.asList(new Friend(1,"Имя Фамилия"),new Friend(2,"Имя Фамилия"),new Friend(3,"Имя Фамилия")));
-		return new FriendsListPresenter(new GetUserListInteractor(friendDataProvider, Schedulers.io(), AndroidSchedulers.mainThread()));
+				Arrays.asList(new Friend(1,"Имя Фамилия"),new Friend(2,"Имя Фамилия"),new Friend(3,"Имя Фамилия"))).delay(2, TimeUnit.SECONDS);
+		return new FriendsListPresenter(new GetUserListInteractor(friendDataProvider, new MainSchedulersProvider()));
 	}
 }

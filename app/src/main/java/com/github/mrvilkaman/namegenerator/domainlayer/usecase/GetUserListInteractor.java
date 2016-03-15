@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.namegenerator.domainlayer.usecase;
 
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.FriendDataProvider;
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.SchedulersProvider;
 import com.github.mrvilkaman.namegenerator.presentationlayer.activities.App;
 import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
 
@@ -16,8 +17,8 @@ public class GetUserListInteractor extends UseCase{
 
 	private final FriendDataProvider friendProvider;
 
-	public GetUserListInteractor(FriendDataProvider friendProvider, Scheduler subscribeOn, Scheduler observeOn) {
-		super(subscribeOn, observeOn);
+	public GetUserListInteractor(FriendDataProvider friendProvider, SchedulersProvider provider) {
+		super(provider.io(), provider.mainThread());
 		this.friendProvider = friendProvider;
 	}
 
