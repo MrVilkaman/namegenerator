@@ -7,7 +7,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Zahar on 22.01.2016.
  */
-public class MainSchedulersProvider implements SchedulersProvider {
+class MainSchedulersProvider implements SchedulersProvider {
 
 	@Override
 	public Scheduler mainThread() {

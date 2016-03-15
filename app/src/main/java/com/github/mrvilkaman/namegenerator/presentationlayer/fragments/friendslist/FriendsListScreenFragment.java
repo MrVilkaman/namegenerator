@@ -10,21 +10,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.github.mrvilkaman.namegenerator.R;
-import com.github.mrvilkaman.namegenerator.domainlayer.providers.FriendDataProvider;
-import com.github.mrvilkaman.namegenerator.domainlayer.providers.MainSchedulersProvider;
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProviders;
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProvidersFactory;
 import com.github.mrvilkaman.namegenerator.domainlayer.usecase.GetUserListInteractor;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.MySimpleAdapter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
 import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter> implements FriendsListView {
 
@@ -73,8 +68,7 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 
 	@Override
 	public FriendsListPresenter newPresenter() {
-		FriendDataProvider friendDataProvider = () -> Observable.just(
-				Arrays.asList(new Friend(1,"Имя Фамилия"),new Friend(2,"Имя Фамилия"),new Friend(3,"Имя Фамилия"))).delay(2, TimeUnit.SECONDS);
-		return new FriendsListPresenter(new GetUserListInteractor(friendDataProvider, new MainSchedulersProvider()));
+		DataProviders dataProviders = DataProvidersFactory.get();
+		return new FriendsListPresenter(new GetUserListInteractor(dataProviders.getFriendDataProvider(), dataProviders.getSchedulersProvider()));
 	}
 }

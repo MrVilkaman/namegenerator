@@ -1,7 +1,10 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.activities;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProvidersFactory;
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProvidersImpl;
 import com.vk.sdk.VKSdk;
 
 /**
@@ -13,5 +16,12 @@ public class App extends Application {
 	public void onCreate() {
 		super.onCreate();
 		VKSdk.initialize(this);
+
+		DataProvidersFactory.init(getSourceFactory());
+	}
+
+	@NonNull
+	protected DataProvidersImpl getSourceFactory() {
+		return new DataProvidersImpl();
 	}
 }
