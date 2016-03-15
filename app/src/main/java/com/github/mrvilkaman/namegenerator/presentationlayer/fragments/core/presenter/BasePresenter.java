@@ -13,20 +13,9 @@ import rx.subscriptions.CompositeSubscription;
 
 public abstract class BasePresenter<V extends BaseView> {
 
-	private CompositeSubscription subscriptions;
 	private V view;
 
 	protected void onViewBeforeDetached() {
-	}
-
-	public final <T> void subscribe(Observable<T> observable, Observer<T> observer) {
-		subscriptions.add(observable.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(observer));
-	}
-
-	public final <T> void subscribe(Subscription observable) {
-		subscriptions.add(observable);
 	}
 
 	protected void onViewAttached() {
@@ -42,18 +31,13 @@ public abstract class BasePresenter<V extends BaseView> {
 
 	public final void setView(V view) {
 		if (view == null) {
-			if (subscriptions != null) {
-				subscriptions.unsubscribe();
-			}
-
-			if (this.view != null) {
+						if (this.view != null) {
 				onViewBeforeDetached();
 			}
 			this.view = null;
 			onViewDetached();
 		} else {
 			this.view = view;
-			subscriptions = new CompositeSubscription();
 			onViewAttached();
 		}
 	}
