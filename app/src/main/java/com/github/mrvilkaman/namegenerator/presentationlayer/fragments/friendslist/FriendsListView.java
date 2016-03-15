@@ -11,5 +11,5 @@ import java.util.List;
 
 public interface FriendsListView extends BaseView {
 
-	void bindFriends(List<Friend> friends);
+	void renderFriendsList(List<Friend> friends);
 }

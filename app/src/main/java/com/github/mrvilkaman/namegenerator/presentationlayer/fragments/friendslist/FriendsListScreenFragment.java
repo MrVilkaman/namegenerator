@@ -10,13 +10,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.github.mrvilkaman.namegenerator.R;
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.FriendDataProvider;
+import com.github.mrvilkaman.namegenerator.domainlayer.usecase.GetUserListInteractor;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.MySimpleAdapter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
 import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
 
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter> implements FriendsListView {
 
@@ -59,12 +65,14 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 	}
 
 	@Override
-	public void bindFriends(List<Friend> friends) {
+	public void renderFriendsList(List<Friend> friends) {
 		adapter.setItems(friends);
 	}
 
 	@Override
 	public FriendsListPresenter newPresenter() {
-		return new FriendsListPresenter();
+		FriendDataProvider friendDataProvider = () -> Observable.just(
+				Arrays.asList(new Friend(1,"Имя Фамилия"),new Friend(2,"Имя Фамилия"),new Friend(3,"Имя Фамилия")));
+		return new FriendsListPresenter(new GetUserListInteractor(friendDataProvider, Schedulers.io(), AndroidSchedulers.mainThread()));
 	}
 }
