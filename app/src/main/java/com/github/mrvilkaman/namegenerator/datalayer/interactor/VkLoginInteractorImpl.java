@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.github.mrvilkaman.namegenerator.domainlayer.interactor.VkLoginInteractor;
-import com.vk.sdk.VKAccessToken;
-import com.vk.sdk.VKCallback;
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProviders;
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProvidersFactory;
+import com.github.mrvilkaman.namegenerator.domainlayer.usecase.HandleTokenUseCase;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKServiceActivity;
@@ -46,7 +47,8 @@ public class VkLoginInteractorImpl implements VkLoginInteractor {
 	}
 
 	@Override
-	public void handleVkResponse(int requestCode, int resultCode, Intent data, VKCallback<VKAccessToken> callback) {
-		VKSdk.onActivityResult(requestCode, resultCode, data, callback);
+	public HandleTokenUseCase handleVkResponse(int requestCode, int resultCode, Intent data) {
+		DataProviders dataProviders = DataProvidersFactory.get();
+		return new HandleTokenUseCase(requestCode,resultCode,data,dataProviders.getSchedulersProvider());
 	}
 }

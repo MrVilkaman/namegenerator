@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.github.mrvilkaman.namegenerator.R;
 import com.github.mrvilkaman.namegenerator.domainlayer.interactor.InteractorFactory;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
+import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.friendslist.FriendsListScreenFragment;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -67,8 +68,6 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 
 	@Override
 	public void goToMainScreen() {
-		//// TODO: 13.03.16 Open main screen
-//		showFragmentWithoutBackStack();
-		showMessage("goToMainScreen");
+		showFragmentWithoutBackStack(FriendsListScreenFragment.open());
 	}
 }
