@@ -22,9 +22,6 @@ public class GetUserListUseCase extends UseCase<List<Friend>> {
 
 	@Override
 	protected Observable buildUseCaseObservable() {
-		return friendProvider.getFriends()
-				.flatMap(Observable::from)
-				.map(friend -> friend.getName() + " Hello")
-				.toList();
+		return friendProvider.getFriends();
 	}
 }
