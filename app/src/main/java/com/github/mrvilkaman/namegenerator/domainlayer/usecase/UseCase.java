@@ -10,7 +10,7 @@ import rx.subscriptions.Subscriptions;
 /**
  * Created by root on 15.03.16.
  */
-public abstract class UseCase {
+public abstract class UseCase<T> {
 
 	private final Scheduler subscribeOn;
 	private final Scheduler observeOn;
@@ -22,10 +22,10 @@ public abstract class UseCase {
 		this.observeOn = observeOn;
 	}
 
-	protected abstract Observable buildUseCaseObservable();
+	protected abstract Observable<T> buildUseCaseObservable();
 
 	@SuppressWarnings("unchecked")
-	public void execute(Subscriber UseCaseSubscriber) {
+	public void execute(Subscriber<T> UseCaseSubscriber) {
 		this.subscription = this.buildUseCaseObservable()
 				.subscribeOn(subscribeOn)
 				.observeOn(observeOn)

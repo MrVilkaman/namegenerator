@@ -14,9 +14,9 @@ import java.util.List;
 
 public class FriendsListPresenter extends BasePresenter<FriendsListView> {
 
-	private final UseCase getUserListUseCase;
+	private final UseCase<List<Friend>> getUserListUseCase;
 
-	public FriendsListPresenter(UseCase getUserListUseCase) {
+	public FriendsListPresenter(UseCase<List<Friend>> getUserListUseCase) {
 		this.getUserListUseCase = getUserListUseCase;
 	}
 

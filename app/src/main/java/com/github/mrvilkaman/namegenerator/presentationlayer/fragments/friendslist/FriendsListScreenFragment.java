@@ -66,6 +66,6 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 
 	@Override
 	public FriendsListPresenter newPresenter() {
-		return new FriendsListPresenter(UseCaseFactory.getUserListInteractor());
+		return new FriendsListPresenter(UseCaseFactory.getUserListUseCase());
 	}
 }

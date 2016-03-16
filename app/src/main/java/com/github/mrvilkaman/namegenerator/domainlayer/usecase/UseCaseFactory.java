@@ -8,7 +8,7 @@ import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProvidersFa
  */
 public class UseCaseFactory {
 
-	public static GetUserListUseCase getUserListInteractor(){
+	public static GetUserListUseCase getUserListUseCase(){
 		DataProviders dataProviders = DataProvidersFactory.get();
 		return new GetUserListUseCase(dataProviders.getFriendDataProvider(), dataProviders.getSchedulersProvider());
 	}
