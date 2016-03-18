@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.github.mrvilkaman.namegenerator.R;
 import com.github.mrvilkaman.namegenerator.presentationlayer.activities.BaseActivityPresenter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.presenter.BasePresenter;
@@ -15,7 +16,9 @@ import com.github.mrvilkaman.namegenerator.presentationlayer.utils.IToolbar;
 import com.github.mrvilkaman.namegenerator.presentationlayer.utils.OnBackPressedListener;
 import com.github.mrvilkaman.namegenerator.presentationlayer.utils.UIUtils;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnTouch;
 
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BaseView, BaseActivityView, OnBackPressedListener {
 
@@ -23,6 +26,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
 	private String previousFragment;
 	P relationPresenter;
+
+	@Nullable
+	@Bind(R.id.progress_wheel)
+	View progressBar;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,8 +64,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	}
 
 	@Nullable
-		//// TODO: 10.03.16  https://github.com/oguzbabaoglu/butterfork
-//	@OnTouch(R.id.parent)
+	@OnTouch(R.id.parent)
 	boolean onTouchParent() {
 		hideKeyboard();
 		return false;
@@ -88,12 +94,20 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
 	@Override
 	public void showProgress() {
-		getActivityView().showProgress();
+		if (progressBar == null) {
+			getActivityView().showProgress();
+		} else {
+			progressBar.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
 	public void hideProgress() {
-		getActivityView().hideProgress();
+		if (progressBar == null) {
+			getActivityView().hideProgress();
+		} else {
+			progressBar.setVisibility(View.GONE);
+		}
 	}
 
 	@Override

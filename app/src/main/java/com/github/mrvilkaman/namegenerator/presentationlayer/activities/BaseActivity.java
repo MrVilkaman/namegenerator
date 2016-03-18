@@ -1,5 +1,6 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.github.mrvilkaman.namegenerator.R;
@@ -210,7 +212,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseActi
 
 	@Override
 	public void hideKeyboard() {
-
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		View view = getCurrentFocus();
+		if (view != null) {
+			view.clearFocus();
+			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+		}
 	}
 
 	@Override

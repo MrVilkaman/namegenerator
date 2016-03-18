@@ -41,7 +41,8 @@ public class HelloScreenPresenter extends BasePresenter<HelloScreenView> {
 		if (tokenInteractor.checkToken()) {
 			view().goToMainScreen();
 		}else{
-			loginInteractor.sendVkLoginRequest();
+//			loginInteractor.sendVkLoginRequest();
+			onActivityResult(1,2,null);
 		}
 	}
 
