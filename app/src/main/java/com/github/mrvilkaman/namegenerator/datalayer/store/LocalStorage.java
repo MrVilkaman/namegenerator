@@ -1,4 +1,4 @@
-package com.github.mrvilkaman.namegenerator.datalayer;
+package com.github.mrvilkaman.namegenerator.datalayer.store;
 
 /**
  * Created by root on 12.03.16.

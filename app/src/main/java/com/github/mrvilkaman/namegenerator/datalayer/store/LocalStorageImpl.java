@@ -1,7 +1,6 @@
-package com.github.mrvilkaman.namegenerator.datalayer;
+package com.github.mrvilkaman.namegenerator.datalayer.store;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 /**
  * Created by root on 12.03.16.

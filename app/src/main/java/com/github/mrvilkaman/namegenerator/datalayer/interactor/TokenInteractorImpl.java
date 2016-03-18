@@ -2,7 +2,6 @@ package com.github.mrvilkaman.namegenerator.datalayer.interactor;
 
 import android.text.TextUtils;
 
-import com.github.mrvilkaman.namegenerator.datalayer.LocalStorage;
 import com.github.mrvilkaman.namegenerator.domainlayer.interactor.TokenInteractor;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.SessionDataProvider;
 

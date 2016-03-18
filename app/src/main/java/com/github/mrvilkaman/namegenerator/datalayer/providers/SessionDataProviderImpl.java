@@ -1,7 +1,6 @@
 package com.github.mrvilkaman.namegenerator.datalayer.providers;
 
-import com.github.mrvilkaman.namegenerator.datalayer.LocalStorage;
-import com.github.mrvilkaman.namegenerator.datalayer.LocalStorageImpl;
+import com.github.mrvilkaman.namegenerator.datalayer.store.LocalStorage;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.SessionDataProvider;
 
 /**
