@@ -14,7 +14,7 @@ public class FriendEntityVkModelMapper {
 		JSONObject jsonObject = vkApiModel.fields;
 		String s = jsonObject.getString("first_name");
 		String s1 = jsonObject.getString("last_name");
-		int id = jsonObject.getInt("id");
+		long id = jsonObject.getLong("id");
 
 		return new Friend(id,s +" "+ s1);
 	}

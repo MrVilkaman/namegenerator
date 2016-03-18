@@ -17,7 +17,7 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	protected BaseFragment createStartFragment() {
-		return HelloScreenFragment.open();
+		return FriendsListScreenFragment.open();
 	}
 
 	@Override

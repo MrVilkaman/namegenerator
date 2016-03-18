@@ -17,17 +17,18 @@ import com.github.mrvilkaman.namegenerator.domainlayer.providers.SessionDataProv
  */
 public class DataProvidersImpl implements DataProviders {
 
-	private Context context;
-	private MemoryStorage memoryStorage = new MemoryStorageImpl();
+	private final Context context;
+	private final MemoryStorage memoryStorage;
 
 	public DataProvidersImpl(Context context) {
 		this.context = context;
+		memoryStorage = new MemoryStorageImpl();
 	}
 
 	@Override
 	public SessionDataProvider getSessionDataProvider() {
 		//// TODO: 18.03.16 maybe LocalStorageImpl singleton ?
-		return new SessionDataProviderImpl(new LocalStorageImpl(context));
+		return new SessionDataProviderImpl(new LocalStorageImpl(context),memoryStorage);
 	}
 
 	@Override

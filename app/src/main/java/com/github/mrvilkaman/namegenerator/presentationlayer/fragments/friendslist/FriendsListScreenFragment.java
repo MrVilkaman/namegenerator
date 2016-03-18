@@ -8,12 +8,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.github.mrvilkaman.namegenerator.R;
 import com.github.mrvilkaman.namegenerator.domainlayer.usecase.UseCaseFactory;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.MySimpleAdapter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
+import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.info.InfoScreenFragment;
 import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
 
 import java.util.List;
@@ -59,7 +61,7 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 	}
 
 	private void openFriend(Friend friend) {
-		showMessage(friend.toString());
+		showFragment(InfoScreenFragment.open(friend.getId()));
 	}
 
 	private void loadData() {

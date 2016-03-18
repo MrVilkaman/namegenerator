@@ -4,15 +4,15 @@ package com.github.mrvilkaman.namegenerator.presentationlayer.model;
  * Created by root on 13.03.16.
  */
 public class Friend {
-	private int id;
+	private long id;
 	private String name;
 
-	public Friend(int id, String name) {
+	public Friend(long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -32,11 +32,11 @@ public class Friend {
 
 	@Override
 	public int hashCode() {
-		return id;
+		return (int) (id ^ (id >>> 32));
 	}
 
 	@Override
 	public String toString() {
-		return name;
+		return name +" "+id;
 	}
 }

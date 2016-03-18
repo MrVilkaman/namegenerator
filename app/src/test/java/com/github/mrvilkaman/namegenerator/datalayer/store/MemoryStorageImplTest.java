@@ -30,7 +30,7 @@ public class MemoryStorageImplTest {
 	public void testGetNull() {
 		// Arrange
 		// Act
-		Friend friend = storage.get(LocalCacheItemType.FRIENDS);
+		Friend friend = storage.get(LocalCacheItemType.TOKEN);
 
 		List<Friend> friendList = storage.get(LocalCacheItemType.FRIENDS_LIST);
 
@@ -48,10 +48,10 @@ public class MemoryStorageImplTest {
 		friendList2.add(sad);
 
 		// Act
-		storage.save(LocalCacheItemType.FRIENDS, sad);
+		storage.save(LocalCacheItemType.TOKEN, sad);
 		storage.save(LocalCacheItemType.FRIENDS_LIST, friendList2);
 
-		Friend friend = storage.get(LocalCacheItemType.FRIENDS);
+		Friend friend = storage.get(LocalCacheItemType.TOKEN);
 		List<Friend> friendList = storage.get(LocalCacheItemType.FRIENDS_LIST);
 
 		// Assert
@@ -65,20 +65,20 @@ public class MemoryStorageImplTest {
 		Friend sad = new Friend(1, "sad");
 		List<Friend> friendList2 = new ArrayList<>();
 		friendList2.add(sad);
-		storage.save(LocalCacheItemType.FRIENDS, sad);
+		storage.save(LocalCacheItemType.TOKEN, sad);
 		storage.save(LocalCacheItemType.FRIENDS_LIST, friendList2);
 
 		sad = new Friend(99, "фывфывsad");
 		friendList2 = new ArrayList<>();
 		friendList2.add(sad);
 
-		storage.save(LocalCacheItemType.FRIENDS, sad);
+		storage.save(LocalCacheItemType.TOKEN, sad);
 		storage.save(LocalCacheItemType.FRIENDS_LIST, friendList2);
 
 		// Act
 
 
-		Friend friend = storage.get(LocalCacheItemType.FRIENDS);
+		Friend friend = storage.get(LocalCacheItemType.TOKEN);
 		List<Friend> friendList = storage.get(LocalCacheItemType.FRIENDS_LIST);
 
 		// Assert
