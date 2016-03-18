@@ -22,6 +22,6 @@ public class GetUserListUseCase extends UseCase<List<Friend>> {
 
 	@Override
 	protected Observable buildUseCaseObservable() {
-		return friendProvider.getFriends();
+		return friendProvider.getFriends(true);
 	}
 }

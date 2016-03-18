@@ -12,16 +12,21 @@ import java.lang.reflect.Type;
  */
 public class MemoryStorageImpl implements MemoryStorage {
 
-	private Map<Types,Object> friends = new HashMap<>();
+	private Map<LocalCacheItemType,Object> friends = new HashMap<>();
 
 	@Override
-	public <T> void save(Types type, T object) {
+	public <T> void save(LocalCacheItemType type, T object) {
 		friends.put(type,object);
 	}
 
 	@Override
-	public <T> T get(Types type) {
+	public <T> T get(LocalCacheItemType type) {
 		return (T)friends.get(type);
+	}
+
+	@Override
+	public boolean has(LocalCacheItemType type) {
+		return friends.containsKey(type);
 	}
 
 }

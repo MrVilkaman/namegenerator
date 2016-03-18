@@ -11,5 +11,5 @@ import rx.Observable;
  */
 public interface FriendDataProvider {
 
-	Observable<List<Friend>> getFriends();
+	Observable<List<Friend>> getFriends(boolean forceRefresh);
 }

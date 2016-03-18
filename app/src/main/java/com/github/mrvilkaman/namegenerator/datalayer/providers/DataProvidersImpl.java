@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.github.mrvilkaman.namegenerator.datalayer.store.LocalStorageImpl;
 import com.github.mrvilkaman.namegenerator.datalayer.entity.mapper.FriendEntityVkModelMapper;
+import com.github.mrvilkaman.namegenerator.datalayer.store.MemoryStorage;
+import com.github.mrvilkaman.namegenerator.datalayer.store.MemoryStorageImpl;
 import com.github.mrvilkaman.namegenerator.datalayer.store.VkStoreImpl;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProviders;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.FriendDataProvider;
@@ -16,6 +18,7 @@ import com.github.mrvilkaman.namegenerator.domainlayer.providers.SessionDataProv
 public class DataProvidersImpl implements DataProviders {
 
 	private Context context;
+	private MemoryStorage memoryStorage = new MemoryStorageImpl();
 
 	public DataProvidersImpl(Context context) {
 		this.context = context;
@@ -35,6 +38,6 @@ public class DataProvidersImpl implements DataProviders {
 	@Override
 	public FriendDataProvider getFriendDataProvider() {
 		//// TODO: 17.03.16 maybe FriendEntityVkModelMapper and VkStoreImpl singleton
-		return new FriendDataProviderImpl(new VkStoreImpl(),new FriendEntityVkModelMapper());
+		return new FriendDataProviderImpl(new VkStoreImpl(),new FriendEntityVkModelMapper(),memoryStorage);
 	}
 }

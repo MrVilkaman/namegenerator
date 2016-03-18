@@ -12,7 +12,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.mrvilkaman.namegenerator.datalayer.store.MemoryStorageImpl.Types;
 
 /**
  * Created by Zahar on 18.03.16.
@@ -31,9 +30,9 @@ public class MemoryStorageImplTest {
 	public void testGetNull() {
 		// Arrange
 		// Act
-		Friend friend = storage.get(Types.FRIENDS);
+		Friend friend = storage.get(LocalCacheItemType.FRIENDS);
 
-		List<Friend> friendList = storage.get(Types.FRIENDS_LIST);
+		List<Friend> friendList = storage.get(LocalCacheItemType.FRIENDS_LIST);
 
 		// Assert
 		Assert.assertThat(friendList, CoreMatchers.nullValue());
@@ -49,11 +48,11 @@ public class MemoryStorageImplTest {
 		friendList2.add(sad);
 
 		// Act
-		storage.save(Types.FRIENDS, sad);
-		storage.save(Types.FRIENDS_LIST, friendList2);
+		storage.save(LocalCacheItemType.FRIENDS, sad);
+		storage.save(LocalCacheItemType.FRIENDS_LIST, friendList2);
 
-		Friend friend = storage.get(Types.FRIENDS);
-		List<Friend> friendList = storage.get(Types.FRIENDS_LIST);
+		Friend friend = storage.get(LocalCacheItemType.FRIENDS);
+		List<Friend> friendList = storage.get(LocalCacheItemType.FRIENDS_LIST);
 
 		// Assert
 		Assert.assertThat(friend, CoreMatchers.equalTo(sad));
@@ -66,21 +65,21 @@ public class MemoryStorageImplTest {
 		Friend sad = new Friend(1, "sad");
 		List<Friend> friendList2 = new ArrayList<>();
 		friendList2.add(sad);
-		storage.save(Types.FRIENDS, sad);
-		storage.save(Types.FRIENDS_LIST, friendList2);
+		storage.save(LocalCacheItemType.FRIENDS, sad);
+		storage.save(LocalCacheItemType.FRIENDS_LIST, friendList2);
 
 		sad = new Friend(99, "фывфывsad");
 		friendList2 = new ArrayList<>();
 		friendList2.add(sad);
 
-		storage.save(Types.FRIENDS, sad);
-		storage.save(Types.FRIENDS_LIST, friendList2);
+		storage.save(LocalCacheItemType.FRIENDS, sad);
+		storage.save(LocalCacheItemType.FRIENDS_LIST, friendList2);
 
 		// Act
 
 
-		Friend friend = storage.get(Types.FRIENDS);
-		List<Friend> friendList = storage.get(Types.FRIENDS_LIST);
+		Friend friend = storage.get(LocalCacheItemType.FRIENDS);
+		List<Friend> friendList = storage.get(LocalCacheItemType.FRIENDS_LIST);
 
 		// Assert
 		Assert.assertThat(friend, CoreMatchers.equalTo(sad));
