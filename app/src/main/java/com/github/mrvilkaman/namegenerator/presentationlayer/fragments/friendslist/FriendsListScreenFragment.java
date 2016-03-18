@@ -4,6 +4,7 @@ package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.friendsl
  */
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,10 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 
 	@Bind(R.id.recycler_view)
 	RecyclerView recyclerView;
+
+	@Bind(R.id.parent)
+	SwipeRefreshLayout refreshLayout;
+
 	private MySimpleAdapter<Friend> adapter;
 
 	public static FriendsListScreenFragment open() {
@@ -43,12 +48,14 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.setHasFixedSize(true);
+		refreshLayout.setOnRefreshListener(this::loadData);
 		if (adapter == null) {
 			adapter = new MySimpleAdapter<>();
-			loadData();
+			refreshLayout.post(this::loadData);
 		}
 		adapter.setOnClick(this::openFriend);
 		recyclerView.setAdapter(adapter);
+
 	}
 
 	private void openFriend(Friend friend) {
@@ -56,6 +63,7 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 	}
 
 	private void loadData() {
+		showProgress();
 		getPresenter().loadFiends();
 	}
 
@@ -67,5 +75,15 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 	@Override
 	public FriendsListPresenter newPresenter() {
 		return new FriendsListPresenter(UseCaseFactory.getUserListUseCase());
+	}
+
+	@Override
+	public void showProgress() {
+		refreshLayout.setRefreshing(true);
+	}
+
+	@Override
+	public void hideProgress() {
+		refreshLayout.setRefreshing(false);
 	}
 }
