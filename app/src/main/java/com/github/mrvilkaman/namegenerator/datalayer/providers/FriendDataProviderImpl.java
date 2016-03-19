@@ -55,4 +55,24 @@ public class FriendDataProviderImpl implements FriendDataProvider {
 				})
 				.doOnNext(friends -> memoryStorage.save(LocalCacheItemType.FRIENDS_LIST, friends));
 	}
+
+	@Override
+	public Observable<Friend> getLastFriend() {
+		return Observable.just(memoryStorage.get(LocalCacheItemType.FRIENDS));
+	}
+
+	@Override
+	public void setLastFriend(Friend friend) {
+		memoryStorage.save(LocalCacheItemType.FRIENDS,friend);
+	}
+
+	@Override
+	public Observable<Friend> getFriendsById(long friendId) {
+		return getFriendsLocal()
+				.filter(list -> list != null)
+				.concatWith(getFriendsRemote())
+				.concatMap(Observable::from)
+				.first(friend -> friend.getId() == friendId)
+				.doOnNext(this::setLastFriend);
+	}
 }

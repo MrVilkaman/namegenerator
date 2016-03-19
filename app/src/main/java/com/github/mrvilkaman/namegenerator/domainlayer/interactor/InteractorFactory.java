@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 
 import com.github.mrvilkaman.namegenerator.datalayer.interactor.TokenInteractorImpl;
 import com.github.mrvilkaman.namegenerator.datalayer.interactor.VkLoginInteractorImpl;
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.FriendDataProvider;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.SessionDataProvider;
 
 import static com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProvidersFactory.get;
@@ -20,5 +21,9 @@ public class InteractorFactory {
 
 	public static VkLoginInteractor getVkLoginInteractor(Fragment frag) {
 		return new VkLoginInteractorImpl(frag);
+	}
+	public static SaveLocalUserInteractor getSaveLocalUserInteractor() {
+		FriendDataProvider friendDataProvider = get().getFriendDataProvider();
+		return new SaveLocalUserInteractor(friendDataProvider);
 	}
 }

@@ -13,4 +13,9 @@ public interface FriendDataProvider {
 
 	Observable<List<Friend>> getFriendsRemote();
 	Observable<List<Friend>> getFriendsLocal();
+
+	Observable<Friend> getLastFriend();
+	void setLastFriend(Friend friend);
+
+	Observable<Friend> getFriendsById(long friendId);
 }

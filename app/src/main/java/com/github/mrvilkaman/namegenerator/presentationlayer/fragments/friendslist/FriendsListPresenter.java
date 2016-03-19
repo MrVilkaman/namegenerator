@@ -1,5 +1,6 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.friendslist;
 
+import com.github.mrvilkaman.namegenerator.domainlayer.interactor.SaveLocalUserInteractor;
 import com.github.mrvilkaman.namegenerator.domainlayer.usecase.UseCase;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.presenter.BasePresenter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseView;
@@ -15,9 +16,11 @@ import java.util.List;
 public class FriendsListPresenter extends BasePresenter<FriendsListView> {
 
 	private final UseCase<List<Friend>> getUserListUseCase;
+	private final SaveLocalUserInteractor saveLocalUserInteractor;
 
-	public FriendsListPresenter(UseCase<List<Friend>> getUserListUseCase) {
+	public FriendsListPresenter(UseCase<List<Friend>> getUserListUseCase,SaveLocalUserInteractor saveLocalUserInteractor) {
 		this.getUserListUseCase = getUserListUseCase;
+		this.saveLocalUserInteractor = saveLocalUserInteractor;
 	}
 
 	public void loadFiends() {
@@ -28,6 +31,11 @@ public class FriendsListPresenter extends BasePresenter<FriendsListView> {
 	@Override
 	protected void onViewDetached() {
 		getUserListUseCase.unsubscribe();
+	}
+
+	public void openFriend(Friend friend) {
+		saveLocalUserInteractor.saveFriend(friend);
+		view().goToInfoScreen(friend.getId());
 	}
 
 	private final class UserListSubscriber extends LoadSubscriber<List<Friend>> {

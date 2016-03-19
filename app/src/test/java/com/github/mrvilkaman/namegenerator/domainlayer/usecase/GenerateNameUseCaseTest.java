@@ -26,6 +26,9 @@ import rx.schedulers.TestScheduler;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -47,13 +50,14 @@ public class GenerateNameUseCaseTest {
 	@Before
 	public void setUp() throws Exception {
 		useCase = new GenerateNameUseCase(dataProvider,new TestSchedulers());
-		when(dataProvider.getFriendsLocal()).thenReturn(Observable.just(null));
+		when(dataProvider.getLastFriend()).thenReturn(Observable.just(null));
+		doReturn(Observable.empty()).when(dataProvider).getFriendsById(anyInt());
 	}
 
 	@Test
-	public void testGetRemote() throws Exception {
+	public void testGetById() throws Exception {
 		// Arrange
-		when(dataProvider.getFriendsRemote()).thenReturn(Observable.just(Arrays.asList(new Friend(1,"qwer"),new Friend(2,"qwer2"))));
+		when(dataProvider.getFriendsById(2)).thenReturn(Observable.just(new Friend(2,"qwer2")));
 		when(nameTemplate.generate(any(Friend.class))).thenReturn("!!!");
 		// Act
 		TestSubscriber<String> test = new TestSubscriber<>();
@@ -63,13 +67,13 @@ public class GenerateNameUseCaseTest {
 		commonAssert(test);
 		Assertions.assertThat(test.getOnNextEvents()).hasSize(1).contains("!!!");
 		verify(nameTemplate).generate(new Friend(2,"qwer2"));
-		verify(dataProvider).getFriendsRemote();
+		verify(dataProvider).getFriendsById(2);
 	}
 
 	@Test
-	public void testGetRemoteFriendsIdAbsent() throws Exception {
+	public void testGetFriendsRemoteFullLastNUllAndIdAbsent() throws Exception {
 		// Arrange
-		when(dataProvider.getFriendsRemote()).thenReturn(Observable.just(Arrays.asList(new Friend(1,"qwer"),new Friend(2,"qwer2"))));
+		when(dataProvider.getFriendsById(1)).thenReturn(Observable.just(new Friend(1,"qwer")));
 		when(nameTemplate.generate(any(Friend.class))).thenReturn("!!!");
 		// Act
 		TestSubscriber<String> test = new TestSubscriber<>();
@@ -77,71 +81,74 @@ public class GenerateNameUseCaseTest {
 
 		// Assert
 		commonAssert(test);
+		test.assertNoErrors();
 		Assertions.assertThat(test.getOnNextEvents()).hasSize(1).contains("");
 		verify(nameTemplate,never()).generate(any());
-		verify(dataProvider).getFriendsRemote();
+		verify(dataProvider).getFriendsById(3);
+
 	}
 
+
 	@Test
-	public void testGetRemoteFriendsEmpty() throws Exception {
+	public void testGetFriendsRemoteFullLastFullAndIdAbsent() throws Exception {
 		// Arrange
-		when(dataProvider.getFriendsRemote()).thenReturn(Observable.just(Collections.EMPTY_LIST));
+		when(dataProvider.getLastFriend()).thenReturn(Observable.just(new Friend(2,"qwer2")));
+		when(dataProvider.getFriendsById(1)).thenReturn(Observable.just(new Friend(1,"qwer")));
+		when(nameTemplate.generate(any(Friend.class))).thenReturn("!!!");
 		// Act
 		TestSubscriber<String> test = new TestSubscriber<>();
 		useCase.setFriendId(3).setNameTemplate(nameTemplate).execute(test);
 
 		// Assert
 		commonAssert(test);
+		test.assertNoErrors();
 		Assertions.assertThat(test.getOnNextEvents()).hasSize(1).contains("");
 		verify(nameTemplate,never()).generate(any());
-		verify(dataProvider).getFriendsRemote();
-
+		verify(dataProvider).getFriendsById(3);
 	}
 
 	@Test
-	public void testGetLocalFriendsFull() throws Exception {
+	public void testGetLastFriendFull() throws Exception {
 		// Arrange
-		when(dataProvider.getFriendsLocal()).thenReturn(Observable.just(Arrays.asList(new Friend(1,"qwer"),new Friend(2,"qwer2"))));
+		when(dataProvider.getLastFriend()).thenReturn(Observable.just(new Friend(1,"qwer")));
 		when(nameTemplate.generate(any(Friend.class))).thenReturn("!!!");
-		Friend friend = spy(new Friend(3, "qwer3"));
-		when(dataProvider.getFriendsRemote()).thenReturn(Observable.just(Arrays.asList(friend)));
+		Friend friend = spy(new Friend(1, "qwer3"));
+		when(dataProvider.getFriendsById(1)).thenReturn(Observable.just(friend));
 
 		// Act
 		TestSubscriber<String> test = new TestSubscriber<>();
-		useCase.setFriendId(2).setNameTemplate(nameTemplate).execute(test);
+		useCase.setFriendId(1).setNameTemplate(nameTemplate).execute(test);
 
 		// Assert
 		commonAssert(test);
 		test.assertNoErrors();
 		Assertions.assertThat(test.getOnNextEvents()).hasSize(1).contains("!!!");
-		verify(nameTemplate).generate(new Friend(2,"qwer2"));
+		verify(nameTemplate).generate(new Friend(1,"qwer"));
 		verify(friend,never()).getId();
+
 	}
 
 	@Test
-	@Ignore
 	public void testGetLocalFriendsFullButAbsentNeedIdAndUseRemote() throws Exception {
 		// Arrange
-		when(dataProvider.getFriendsLocal()).thenReturn(Observable.just(Arrays.asList(new Friend(1,"qwer"),new Friend(2,"qwer2"))));
+		when(dataProvider.getLastFriend()).thenReturn(Observable.just(new Friend(1,"qwer")));
 		when(nameTemplate.generate(any(Friend.class))).thenReturn("!!!");
-		Friend friend = spy(new Friend(3, "qwer3"));
-		when(dataProvider.getFriendsRemote()).thenReturn(Observable.just(Arrays.asList(friend)));
+		when(dataProvider.getFriendsById(2)).thenReturn(Observable.just(new Friend(2, "qwer2")));
 
 		// Act
 		TestSubscriber<String> test = new TestSubscriber<>();
-		useCase.setFriendId(3).setNameTemplate(nameTemplate).execute(test);
+		useCase.setFriendId(2).setNameTemplate(nameTemplate).execute(test);
 
 		// Assert
 		commonAssert(test);
 		test.assertNoErrors();
 		Assertions.assertThat(test.getOnNextEvents()).hasSize(1).contains("!!!");
-		verify(nameTemplate).generate(new Friend(3,"qwer3"));
-		verify(friend,never()).getId();
+		verify(nameTemplate).generate(new Friend(2, "qwer2"));
+
 	}
 
 	private void commonAssert(TestSubscriber<String> test) {
 		test.awaitTerminalEvent();
 		test.onCompleted();
-		verify(dataProvider).getFriendsLocal();
 	}
 }

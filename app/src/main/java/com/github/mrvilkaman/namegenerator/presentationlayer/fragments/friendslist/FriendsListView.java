@@ -12,4 +12,6 @@ import java.util.List;
 public interface FriendsListView extends BaseView {
 
 	void renderFriendsList(List<Friend> friends);
+
+	void goToInfoScreen(long id);
 }

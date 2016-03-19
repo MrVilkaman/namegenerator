@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.github.mrvilkaman.namegenerator.R;
+import com.github.mrvilkaman.namegenerator.domainlayer.interactor.InteractorFactory;
 import com.github.mrvilkaman.namegenerator.domainlayer.usecase.UseCaseFactory;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.MySimpleAdapter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
@@ -21,6 +22,9 @@ import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
 import java.util.List;
 
 import butterknife.Bind;
+
+import static com.github.mrvilkaman.namegenerator.domainlayer.interactor.InteractorFactory.*;
+import static com.github.mrvilkaman.namegenerator.domainlayer.usecase.UseCaseFactory.*;
 
 public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter> implements FriendsListView {
 
@@ -61,12 +65,17 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 	}
 
 	private void openFriend(Friend friend) {
-		showFragment(InfoScreenFragment.open(friend.getId()));
+		getPresenter().openFriend(friend);
 	}
 
 	private void loadData() {
 		showProgress();
 		getPresenter().loadFiends();
+	}
+
+	@Override
+	public void goToInfoScreen(long id) {
+		showFragment(InfoScreenFragment.open(id));
 	}
 
 	@Override
@@ -76,7 +85,7 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 
 	@Override
 	public FriendsListPresenter newPresenter() {
-		return new FriendsListPresenter(UseCaseFactory.getUserListUseCase());
+		return new FriendsListPresenter(getUserListUseCase(), getSaveLocalUserInteractor());
 	}
 
 	@Override
