@@ -43,9 +43,8 @@ public class InfoScreenFragment extends BaseFragment<InfoPresenter> implements I
 
 	@Override
 	public InfoPresenter newPresenter() {
-		NameTemplate template = new StarWarsNameTemplate();
 		DataProviders providers = DataProvidersFactory.get();
-		return new InfoPresenter(new GenerateNameUseCase(getFriendId(),template,providers.getFriendDataProvider(),providers.getSchedulersProvider()));
+		return new InfoPresenter(new GenerateNameUseCase(providers.getFriendDataProvider(),providers.getSchedulersProvider()));
 	}
 
 	@Override

@@ -12,19 +12,27 @@ import rx.Observable;
 public class GenerateNameUseCase extends UseCase<String> {
 
 	private final FriendDataProvider friendDataProvider;
-	private final long friendId;
+	private long friendId;
 	private NameTemplate nameTemplate;
 
-	public GenerateNameUseCase(long friendId, NameTemplate nameTemplate, FriendDataProvider friendDataProvider, SchedulersProvider provider) {
+	public GenerateNameUseCase(FriendDataProvider friendDataProvider, SchedulersProvider provider) {
 		super(provider.computation(), provider.mainThread());
 		this.friendDataProvider = friendDataProvider;
-		this.nameTemplate = nameTemplate;
+	}
+
+	public GenerateNameUseCase setFriendId(long friendId) {
 		this.friendId = friendId;
+		return this;
+	}
+
+	public GenerateNameUseCase setNameTemplate(NameTemplate nameTemplate) {
+		this.nameTemplate = nameTemplate;
+		return this;
 	}
 
 	@Override
 	protected Observable<String> buildUseCaseObservable() {
-		return friendDataProvider.getFriends(false)
+		return friendDataProvider.getFriendsRemote()
 				.flatMap(Observable::from)
 				.first(friend -> friend.getId() == friendId)
 				.map(friend -> nameTemplate.generate(friend))

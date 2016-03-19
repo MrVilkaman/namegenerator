@@ -1,7 +1,8 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.info;
 
 import com.github.mrvilkaman.namegenerator.datalayer.providers.DefaultSubscriber;
-import com.github.mrvilkaman.namegenerator.domainlayer.usecase.UseCase;
+import com.github.mrvilkaman.namegenerator.domainlayer.nametemplates.StarWarsNameTemplate;
+import com.github.mrvilkaman.namegenerator.domainlayer.usecase.GenerateNameUseCase;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.presenter.BasePresenter;
 
 /**
@@ -10,14 +11,16 @@ import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.pres
 
 public class InfoPresenter extends BasePresenter<InfoView> {
 
-	private UseCase<String> generateNameUseCase;
+	private GenerateNameUseCase generateNameUseCase;
 
-	public InfoPresenter(UseCase<String> generateNameUseCase) {
+	public InfoPresenter(GenerateNameUseCase generateNameUseCase) {
 		this.generateNameUseCase = generateNameUseCase;
+		generateNameUseCase.setNameTemplate(new StarWarsNameTemplate());
 	}
 
 	public void generate() {
-		generateNameUseCase.execute(new GenerateName());
+		generateNameUseCase.setFriendId(view().getFriendId())
+				.execute(new GenerateName());
 	}
 
 	@Override

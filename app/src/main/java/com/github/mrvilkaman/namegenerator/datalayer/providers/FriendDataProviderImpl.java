@@ -1,5 +1,7 @@
 package com.github.mrvilkaman.namegenerator.datalayer.providers;
 
+import android.util.Log;
+
 import com.github.mrvilkaman.namegenerator.datalayer.entity.mapper.FriendEntityVkModelMapper;
 import com.github.mrvilkaman.namegenerator.datalayer.store.LocalCacheItemType;
 import com.github.mrvilkaman.namegenerator.datalayer.store.MemoryStorage;
@@ -11,6 +13,7 @@ import com.vk.sdk.api.model.VKList;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
@@ -31,22 +34,27 @@ public class FriendDataProviderImpl implements FriendDataProvider {
 	}
 
 	@Override
-	public Observable<List<Friend>> getFriends(boolean forceRefresh) {
-		if (!forceRefresh && memoryStorage.has(LocalCacheItemType.FRIENDS_LIST))
-			return Observable.just(memoryStorage.get(LocalCacheItemType.FRIENDS_LIST));
-		else
-			return vkStore.getFriends("first_name,last_name,city")
-					.map((Func1<VKList, List<Friend>>) o -> {
-						ArrayList<Friend> list = new ArrayList<>();
-						for (int i = 0; i < o.size(); i++) {
-							try {
-								list.add(mapper.transform(o.get(i)));
-							} catch (JSONException e) {
-								list.add(new Friend(-1, "parse error!"));
-							}
+	@SuppressWarnings("unchecked")
+	public Observable<List<Friend>> getFriendsLocal() {
+		return Observable.just(memoryStorage.<List<Friend>>get(LocalCacheItemType.FRIENDS_LIST))
+				.filter(list -> list != null)
+				.defaultIfEmpty(Collections.EMPTY_LIST);
+	}
+
+	@Override
+	public Observable<List<Friend>> getFriendsRemote() {
+		return vkStore.getFriends("first_name,last_name,city")
+				.map((Func1<VKList, List<Friend>>) o -> {
+					ArrayList<Friend> list = new ArrayList<>();
+					for (int i = 0; i < o.size(); i++) {
+						try {
+							list.add(mapper.transform(o.get(i)));
+						} catch (JSONException e) {
+							list.add(new Friend(-1, "parse error!"));
 						}
-						return list;
-					})
-					.doOnNext(friends -> memoryStorage.save(LocalCacheItemType.FRIENDS_LIST, friends));
+					}
+					return list;
+				})
+				.doOnNext(friends -> memoryStorage.save(LocalCacheItemType.FRIENDS_LIST, friends));
 	}
 }

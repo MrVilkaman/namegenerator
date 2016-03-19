@@ -10,17 +10,17 @@ import com.vk.sdk.api.model.VKApiModel;
 import com.vk.sdk.api.model.VKList;
 
 import org.assertj.core.api.Assertions;
+import org.hamcrest.CoreMatchers;
 import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
@@ -55,72 +55,20 @@ public class FriendDataProviderImplTest {
 		when(mapper.transform(Matchers.any())).thenReturn(new Friend(1,"qwer"));
 	}
 
+	// Remote model
 	@Test
-	public void testGetFriendsEmptyMemoryForce() throws JSONException{
+	public void testGetFriendsRemote() throws JSONException{
 		// Act
-		List<Friend> list = provider.getFriends(true)
+		List<Friend> list = provider.getFriendsRemote()
 				.toBlocking()
 				.first();
 
 		// Assert
-		assertationRemoteLoad(list);
-		verify(mstore,never()).has(Matchers.any());
-	}
-
-	@Test
-	public void testGetFriendsEmptyMemoryNotForce() throws JSONException{
-		// Act
-		List<Friend> list = provider.getFriends(false)
-				.toBlocking()
-				.first();
-
-		// Assert
-		assertationRemoteLoad(list);
-		verify(mstore).has(Matchers.any());
-
-	}
-
-	private void assertationRemoteLoad(List<Friend> list) throws JSONException {
 		Assertions.assertThat(list).hasSize(1).contains(new Friend(1,"qwer"));
 		verify(mapper).transform(any());
 		verify(vkStore).getFriends(Matchers.anyString());
+		verify(mstore).save(LocalCacheItemType.FRIENDS_LIST, list);
 		verify(mstore,never()).get(Matchers.any());
-	}
-
-	@Test
-	public void testGetFriendsFullMemoryForce() throws JSONException{
-		// Arrange
-		when(mstore.get(LocalCacheItemType.FRIENDS_LIST)).thenReturn(Arrays.asList(new Friend(1,"qwer")));
-		when(mstore.has(LocalCacheItemType.FRIENDS_LIST)).thenReturn(Boolean.TRUE);
-
-		// Act
-		List<Friend> list = provider.getFriends(true)
-				.toBlocking()
-				.first();
-
-		// Assert
-		assertationRemoteLoad(list);
-		verify(mstore,never()).has(Matchers.any());
-
-	}
-
-	@Test
-	public void testGetFriendsFullMemoryNotForce() throws JSONException{
-		// Arrange
-		when(mstore.get(LocalCacheItemType.FRIENDS_LIST)).thenReturn(Arrays.asList(new Friend(1,"qwer")));
-		when(mstore.has(LocalCacheItemType.FRIENDS_LIST)).thenReturn(Boolean.TRUE);
-
-		// Act
-		List<Friend> list = provider.getFriends(false)
-				.toBlocking()
-				.first();
-
-		// Assert
-		Assertions.assertThat(list).hasSize(1).contains(new Friend(1,"qwer"));
-		verify(mapper,never()).transform(any());
-		verify(vkStore,never()).getFriends(Matchers.anyString());
-		verify(mstore).has(Matchers.any());
-		verify(mstore).get(Matchers.any());
 	}
 
 	@Test
@@ -129,11 +77,40 @@ public class FriendDataProviderImplTest {
 		when(mapper.transform(Matchers.any())).thenThrow(new JSONException("qwer"));
 
 		// Act
-		List<Friend> list = provider.getFriends(false)
+		List<Friend> list = provider.getFriendsRemote()
 				.toBlocking()
 				.first();
 
 		// Assert
-		Assertions.assertThat(list).hasSize(1).contains(new Friend(-1,"parse error!"));;
+		Assertions.assertThat(list).hasSize(1).contains(new Friend(-1,"parse error!"));
+	}
+
+	//Local
+
+	@Test
+	public void testGetFriendsLocalEmpty() throws JSONException{
+		// Arrange
+
+		// Act
+		List<Friend> list = provider.getFriendsLocal()
+				.toBlocking()
+				.first();
+
+		// Assert
+		Assertions.assertThat(list).isEmpty();
+	}
+
+	@Test
+	public void testGetFriendsLocalHas() throws JSONException{
+		// Arrange
+		when(mstore.get(LocalCacheItemType.FRIENDS_LIST)).thenReturn(Arrays.asList(new Friend(1,"qwer")));
+
+		// Act
+		List<Friend> list = provider.getFriendsLocal()
+				.toBlocking()
+				.first();
+
+		// Assert
+		Assertions.assertThat(list).isNotEmpty().contains(new Friend(1,"qwer"));
 	}
 }
