@@ -1,5 +1,7 @@
 package com.github.mrvilkaman.namegenerator.domainlayer.usecase;
 
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.SchedulersProvider;
+
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;

@@ -36,9 +36,7 @@ public class FriendDataProviderImpl implements FriendDataProvider {
 	@Override
 	@SuppressWarnings("unchecked")
 	public Observable<List<Friend>> getFriendsLocal() {
-		return Observable.just(memoryStorage.<List<Friend>>get(LocalCacheItemType.FRIENDS_LIST))
-				.filter(list -> list != null)
-				.defaultIfEmpty(Collections.EMPTY_LIST);
+		return Observable.just(memoryStorage.<List<Friend>>get(LocalCacheItemType.FRIENDS_LIST));
 	}
 
 	@Override

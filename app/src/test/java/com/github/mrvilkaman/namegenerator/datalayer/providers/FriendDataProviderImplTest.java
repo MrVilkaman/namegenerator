@@ -97,7 +97,7 @@ public class FriendDataProviderImplTest {
 				.first();
 
 		// Assert
-		Assertions.assertThat(list).isEmpty();
+		Assertions.assertThat(list).isNull();
 	}
 
 	@Test

@@ -4,6 +4,9 @@ import com.github.mrvilkaman.namegenerator.domainlayer.nametemplates.NameTemplat
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.FriendDataProvider;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.SchedulersProvider;
 
+import java.util.Collections;
+import java.util.NoSuchElementException;
+
 import rx.Observable;
 
 /**
@@ -32,12 +35,13 @@ public class GenerateNameUseCase extends UseCase<String> {
 
 	@Override
 	protected Observable<String> buildUseCaseObservable() {
-		return friendDataProvider.getFriendsRemote()
+		return friendDataProvider.getFriendsLocal()
+				.filter(list -> list != null)
+				.switchIfEmpty(friendDataProvider.getFriendsRemote())
 				.flatMap(Observable::from)
 				.first(friend -> friend.getId() == friendId)
 				.map(friend -> nameTemplate.generate(friend))
-				.onErrorReturn(throwable -> "Error!")
-				.defaultIfEmpty("");
+				.onErrorReturn(throwable -> throwable instanceof NoSuchElementException ? "" : "Error!");
 
 	}
 }
