@@ -1,6 +1,7 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.hello;
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.github.mrvilkaman.namegenerator.datalayer.providers.DefaultSubscriber;
 import com.github.mrvilkaman.namegenerator.domainlayer.interactor.TokenInteractor;
@@ -12,6 +13,9 @@ import com.github.mrvilkaman.namegenerator.presentationlayer.utils.LoadSubscribe
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
+import com.vk.sdk.api.model.VKApiModel;
 
 /**
  * Created by root on 12.03.16.
@@ -41,8 +45,7 @@ public class HelloScreenPresenter extends BasePresenter<HelloScreenView> {
 		if (tokenInteractor.checkToken()) {
 			view().goToMainScreen();
 		}else{
-//			loginInteractor.sendVkLoginRequest();
-			onActivityResult(1,2,null);
+			loginInteractor.sendVkLoginRequest();
 		}
 	}
 

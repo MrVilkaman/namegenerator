@@ -11,6 +11,7 @@ import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProviders;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.FriendDataProvider;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.SchedulersProvider;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.SessionDataProvider;
+import com.google.gson.Gson;
 
 /**
  * Created by Zahar on 16.03.16.
@@ -19,10 +20,12 @@ public class DataProvidersImpl implements DataProviders {
 
 	private final Context context;
 	private final MemoryStorage memoryStorage;
+	private final Gson gson;
 
 	public DataProvidersImpl(Context context) {
 		this.context = context;
 		memoryStorage = new MemoryStorageImpl();
+		gson = new Gson();
 	}
 
 	@Override
@@ -39,6 +42,6 @@ public class DataProvidersImpl implements DataProviders {
 	@Override
 	public FriendDataProvider getFriendDataProvider() {
 		//// TODO: 17.03.16 maybe FriendEntityVkModelMapper and VkStoreImpl singleton
-		return new FriendDataProviderImpl(new VkStoreImpl(),new FriendEntityVkModelMapper(),memoryStorage);
+		return new FriendDataProviderImpl(new VkStoreImpl(),new FriendEntityVkModelMapper(gson),memoryStorage);
 	}
 }

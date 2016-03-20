@@ -60,6 +60,7 @@ dependencies {
     compile libraries.materialProgress
 
     compile libraries.vksdk
+    compile libraries.gson
 
     //tests
     testCompile libraries.junit

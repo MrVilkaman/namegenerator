@@ -1,5 +1,6 @@
 package com.github.mrvilkaman.namegenerator.datalayer.store;
 
+import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKList;
 
 import rx.Observable;
@@ -9,5 +10,5 @@ import rx.Observable;
  */
 public interface VkStore {
 
-	Observable<VKList> getFriends(String fields);
+	Observable<VKResponse> getFriends();
 }

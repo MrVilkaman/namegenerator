@@ -1,12 +1,8 @@
 package com.github.mrvilkaman.namegenerator.datalayer.store;
 
-import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
-import com.vk.sdk.api.model.VKList;
 
 import rx.Observable;
 
@@ -15,16 +11,17 @@ import rx.Observable;
  */
 public class VkStoreImpl implements VkStore{
 
+
 	@Override
-	public Observable<VKList> getFriends(String fields) {
-		Observable.OnSubscribe<VKList> subscribe = subscriber -> {
-			VKRequest result = VKApi.friends()
-					.get(VKParameters.from(VKApiConst.FIELDS, fields));
-			result.executeSyncWithListener(new VKRequest.VKRequestListener() {
+	public Observable<VKResponse> getFriends() {
+
+		Observable.OnSubscribe<VKResponse> subscribe = subscriber -> {
+			VKRequest vkRequest = new VKRequest("execute.newFunc");
+			vkRequest.executeWithListener(new VKRequest.VKRequestListener() {
 				@Override
 				public void onComplete(VKResponse response) {
 					if (!subscriber.isUnsubscribed()) {
-						subscriber.onNext((VKList) response.parsedModel);
+						subscriber.onNext(response);
 						subscriber.onCompleted();
 					}
 				}

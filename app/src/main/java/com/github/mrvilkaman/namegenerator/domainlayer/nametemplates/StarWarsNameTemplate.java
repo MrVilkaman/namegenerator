@@ -8,6 +8,6 @@ import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
 public class StarWarsNameTemplate implements NameTemplate {
 	@Override
 	public String generate(Friend friend) {
-		return friend.getName() +" generate";
+		return friend.getFirstName() +" "+friend.getLastName() +" " + friend.getCity();
 	}
 }

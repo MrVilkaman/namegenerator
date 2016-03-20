@@ -18,9 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,7 +26,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import rx.Observable;
-import rx.observers.TestSubscriber;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -58,7 +55,7 @@ public class FriendDataProviderImplTest {
 		provider = spy(new FriendDataProviderImpl(vkStore, mapper, mstore));
 		VKList value = new VKList();
 		value.add(mock(VKApiModel.class));
-		when(vkStore.getFriends(Matchers.anyString())).thenReturn(Observable.just(value));
+		when(vkStore.getFriends()).thenReturn(Observable.just(value));
 		when(mapper.transform(Matchers.any())).thenReturn(new Friend(1, "qwer"));
 	}
 
@@ -75,7 +72,7 @@ public class FriendDataProviderImplTest {
 				.hasSize(1)
 				.contains(new Friend(1, "qwer"));
 		verify(mapper).transform(any());
-		verify(vkStore).getFriends(Matchers.anyString());
+		verify(vkStore).getFriends();
 		verify(mstore).save(LocalCacheItemType.FRIENDS_LIST, list);
 		verify(mstore, never()).get(Matchers.any());
 	}
