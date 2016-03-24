@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.github.mrvilkaman.namegenerator.R;
+import com.github.mrvilkaman.namegenerator.presentationlayer.app.App;
+import com.github.mrvilkaman.namegenerator.presentationlayer.app.AppComponent;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.MySimpleAdapter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.info.InfoScreenFragment;
@@ -40,7 +42,11 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		DaggerFriendsListComponent.create().inject(this);
+		AppComponent appComponent = App.get(getActivity())
+				.getAppComponent();
+		DaggerFriendsListComponent.builder()
+				.appComponent(appComponent)
+				.build().inject(this);
 	}
 
 	@Override

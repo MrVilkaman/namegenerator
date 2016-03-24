@@ -31,7 +31,8 @@ public class App extends Application {
 	}
 
 	protected DaggerAppComponent.Builder prepareApplicationComponent() {
-		return DaggerAppComponent.builder()
+		return DaggerAppComponent
+				.builder()
 				.appModule(new AppModule(this));
 	}
 

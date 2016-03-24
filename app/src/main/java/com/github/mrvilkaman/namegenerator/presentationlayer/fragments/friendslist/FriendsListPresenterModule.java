@@ -2,8 +2,11 @@ package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.friendsl
 
 import android.support.annotation.NonNull;
 
-import com.github.mrvilkaman.namegenerator.domainlayer.interactor.InteractorModule;
-import com.github.mrvilkaman.namegenerator.domainlayer.usecase.UseCaseFactory;
+import com.github.mrvilkaman.namegenerator.domainlayer.interactor.SaveLocalUserInteractor;
+import com.github.mrvilkaman.namegenerator.domainlayer.usecase.UseCase;
+import com.github.mrvilkaman.namegenerator.domainlayer.usecase.UseCaseModule;
+
+import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
@@ -17,8 +20,9 @@ public class FriendsListPresenterModule {
 
 	@Provides
 	@NonNull
-	FriendsListPresenter provideInfoPresenter() {
-		return null;//new FriendsListPresenter(UseCaseFactory.getUserListUseCase(), InteractorModule.getSaveLocalUserInteractor(friendDataProvider));
+	FriendsListPresenter provideInfoPresenter(@Named(UseCaseModule.USER_LIST) UseCase userListUseCase,
+											  SaveLocalUserInteractor saveLocalUserInteractor) {
+		return new FriendsListPresenter(userListUseCase, saveLocalUserInteractor);
 	}
 
 }
