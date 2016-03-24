@@ -21,8 +21,6 @@ import butterknife.OnClick;
 
 public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> implements HelloScreenView {
 
-	@Inject HelloScreenPresenter presenter;
-
 	@Bind(R.id.hello_message)
 	TextView message;
 	@Bind(R.id.hello_login_btn)
@@ -49,17 +47,6 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
 
-	}
-
-	@Override
-	public HelloScreenPresenter newPresenter() {
-		return null;
-//				new HelloScreenPresenter(InteractorFactory.getVkLoginInteractor(this),InteractorFactory.getTokenInteractor());
-	}
-
-	@Override
-	public HelloScreenPresenter getPresenter() {
-		return presenter;
 	}
 
 	@OnClick(R.id.hello_login_btn)

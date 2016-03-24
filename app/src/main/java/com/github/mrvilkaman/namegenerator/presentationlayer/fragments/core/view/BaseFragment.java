@@ -12,9 +12,12 @@ import com.github.mrvilkaman.namegenerator.R;
 import com.github.mrvilkaman.namegenerator.presentationlayer.activities.BaseActivityPresenter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.activities.BaseActivityView;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.presenter.BasePresenter;
+import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.info.InfoPresenter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.utils.IToolbar;
 import com.github.mrvilkaman.namegenerator.presentationlayer.utils.OnBackPressedListener;
 import com.github.mrvilkaman.namegenerator.presentationlayer.utils.UIUtils;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,6 +28,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	private static final String PREVIOUS_FRAGMENT = "previousFragment";
 
 	private String previousFragment;
+
+	@Inject
 	P relationPresenter;
 
 	@Nullable
@@ -155,13 +160,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 		return (BaseActivityView) getActivity();
 	}
 
-	public abstract P newPresenter();
-
 	@Override
 	public P getPresenter() {
-		if (relationPresenter == null) {
-			relationPresenter = newPresenter();
-		}
 		return relationPresenter;
 	}
 

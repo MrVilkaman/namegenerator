@@ -18,10 +18,6 @@ import butterknife.Bind;
 
 public class InfoScreenFragment extends BaseFragment<InfoPresenter> implements InfoView {
 
-
-	@Inject
-	InfoPresenter presenter;
-
 	private static final String EXTRA_ID = "id";
 	@Bind(R.id.info_name)
 	TextView contentView;
@@ -50,18 +46,6 @@ public class InfoScreenFragment extends BaseFragment<InfoPresenter> implements I
 		getPresenter().generate();
 	}
 
-	@Override
-	public InfoPresenter newPresenter() {
-		if (BuildConfig.DEBUG) {
-			throw new RuntimeException("newPresenter must not use");
-		}
-		return null;
-	}
-
-	@Override
-	public InfoPresenter getPresenter() {
-		return presenter;
-	}
 
 	@Override
 	public void bindContent(String text) {

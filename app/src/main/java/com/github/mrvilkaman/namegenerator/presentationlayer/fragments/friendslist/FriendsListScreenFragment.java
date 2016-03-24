@@ -25,9 +25,6 @@ import butterknife.Bind;
 
 public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter> implements FriendsListView {
 
-	@Inject
-	FriendsListPresenter presenter;
-
 	@Bind(R.id.recycler_view)
 	RecyclerView recyclerView;
 
@@ -87,16 +84,6 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 	@Override
 	public void renderFriendsList(List<Friend> friends) {
 		adapter.setItems(friends);
-	}
-
-	@Override
-	public FriendsListPresenter newPresenter() {
-		return null;
-	}
-
-	@Override
-	public FriendsListPresenter getPresenter() {
-		return presenter;
 	}
 
 	@Override
