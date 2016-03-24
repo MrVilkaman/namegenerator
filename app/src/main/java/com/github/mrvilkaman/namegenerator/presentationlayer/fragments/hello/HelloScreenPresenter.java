@@ -17,16 +17,20 @@ import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiModel;
 
+import javax.inject.Inject;
+
 /**
  * Created by root on 12.03.16.
  */
 
 public class HelloScreenPresenter extends BasePresenter<HelloScreenView> {
 
+
 	private VkLoginInteractor loginInteractor;
 	private TokenInteractor tokenInteractor;
 	private HandleTokenUseCase sub;
 
+	@Inject
 	public HelloScreenPresenter(VkLoginInteractor model,TokenInteractor tokenInteractor) {
 		this.loginInteractor = model;
 		this.tokenInteractor = tokenInteractor;

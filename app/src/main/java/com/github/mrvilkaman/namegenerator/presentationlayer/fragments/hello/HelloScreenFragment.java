@@ -11,10 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.mrvilkaman.namegenerator.R;
+import com.github.mrvilkaman.namegenerator.presentationlayer.app.App;
+import com.github.mrvilkaman.namegenerator.presentationlayer.app.AppComponent;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.friendslist.FriendsListScreenFragment;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -33,10 +33,13 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		AppComponent appComponent = App.get(getActivity())
+				.getAppComponent();
 		DaggerHelloComponent.builder()
+				.appComponent(appComponent)
 				.helloScreenModule(new HelloScreenModule(this))
-				.build().inject(this);
-
+				.build()
+				.inject(this);
 	}
 
 	@Override

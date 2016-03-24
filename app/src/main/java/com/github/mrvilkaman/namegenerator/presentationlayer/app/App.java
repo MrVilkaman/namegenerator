@@ -1,10 +1,9 @@
 package com.github.mrvilkaman.namegenerator.presentationlayer.app;
 
 import android.app.Application;
+import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProvidersFactory;
-import com.github.mrvilkaman.namegenerator.datalayer.providers.DataProvidersImpl;
 import com.vk.sdk.VKSdk;
 
 /**
@@ -12,16 +11,32 @@ import com.vk.sdk.VKSdk;
  */
 public class App extends Application {
 
+	@NonNull
+	private AppComponent appComponent;
+
+	// Prevent need in a singleton (global) reference to the application object.
+	@NonNull
+	public static App get(@NonNull Context context) {
+		return (App) context.getApplicationContext();
+	}
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		appComponent = prepareApplicationComponent().build();
+		appComponent.inject(this);
+
 		VKSdk.initialize(this);
 
-		DataProvidersFactory.init(getSourceFactory());
+	}
+
+	protected DaggerAppComponent.Builder prepareApplicationComponent() {
+		return DaggerAppComponent.builder()
+				.appModule(new AppModule(this));
 	}
 
 	@NonNull
-	protected DataProvidersImpl getSourceFactory() {
-		return new DataProvidersImpl(this);
+	public AppComponent getAppComponent() {
+		return appComponent;
 	}
 }
