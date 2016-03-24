@@ -55,8 +55,8 @@ public class FriendDataProviderImplTest {
 		provider = spy(new FriendDataProviderImpl(vkStore, mapper, mstore));
 		VKList value = new VKList();
 		value.add(mock(VKApiModel.class));
-		when(vkStore.getFriends()).thenReturn(Observable.just(value));
-		when(mapper.transform(Matchers.any())).thenReturn(new Friend(1, "qwer"));
+//		when(vkStore.getFriends()).thenReturn(Observable.just(value));
+//		when(mapper.transform(Matchers.any())).thenReturn(new Friend(1, "qwer"));
 	}
 
 	// Remote model

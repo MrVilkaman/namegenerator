@@ -22,9 +22,16 @@ public class Friend {
 	public Friend(){
 	}
 
-	public Friend(long id, String name) {
+	public Friend(long id, String firstName) {
 		this.id = id;
-		this.firstName = name;
+		this.firstName = firstName;
+	}
+
+	public Friend(String firstName, String lastName, String city, List<Parent> parent) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.city = city;
+		this.parent = parent;
 	}
 
 	public long getId() {
