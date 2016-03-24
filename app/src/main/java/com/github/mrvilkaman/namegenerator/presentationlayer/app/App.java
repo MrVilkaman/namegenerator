@@ -1,4 +1,4 @@
-package com.github.mrvilkaman.namegenerator.presentationlayer.activities;
+package com.github.mrvilkaman.namegenerator.presentationlayer.app;
 
 import android.app.Application;
 import android.support.annotation.NonNull;

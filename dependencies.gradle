@@ -5,6 +5,12 @@ ext.versions = [
         compileSdk       : 23,
         buildTools       : '23.0.2',
 
+
+        dagger                       : '2.1',
+        javaxInject                  : '1',
+        javaxAnnotationApi           : '1.2',
+        rxJava                       : '1.1.2',
+
         supportLibs      : '23.2.0',
         gcm              : '8.4.0',
         butterKnife      : '7.0.1',
@@ -42,6 +48,11 @@ ext.versions = [
 ]
 
 ext.libraries = [
+        dagger                  : "com.google.dagger:dagger:$versions.dagger",
+        daggerCompiler          : "com.google.dagger:dagger-compiler:$versions.dagger",
+        javaxInject             : "javax.inject:javax.inject:$versions.javaxInject",
+        javaxAnnotationApi      : "javax.annotation:javax.annotation-api:$versions.javaxAnnotationApi",
+
         moxy                      : "com.arello-mobile:moxy:$versions.moxy",
         moxyAndroid               : "com.arello-mobile:moxy-android:$versions.moxy",
         moxyCompiler              : "com.arello-mobile:moxy-compiler:$versions.moxy",
