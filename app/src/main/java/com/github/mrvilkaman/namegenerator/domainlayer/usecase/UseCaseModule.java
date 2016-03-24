@@ -2,6 +2,9 @@ package com.github.mrvilkaman.namegenerator.domainlayer.usecase;
 
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.FriendDataProvider;
 import com.github.mrvilkaman.namegenerator.domainlayer.providers.SchedulersProvider;
+import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
+
+import java.util.List;
 
 import javax.inject.Named;
 
@@ -19,7 +22,7 @@ public class UseCaseModule {
 
 	@Provides
 	@Named(USER_LIST)
-	UseCase provideUserListUseCase(FriendDataProvider friendsProvider, SchedulersProvider schedulers) {
+	UseCase<List<Friend>> provideUserListUseCase(FriendDataProvider friendsProvider, SchedulersProvider schedulers) {
 		return new GetUserListUseCase(friendsProvider, schedulers);
 	}
 }

@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.github.mrvilkaman.namegenerator.BuildConfig;
 import com.github.mrvilkaman.namegenerator.R;
+import com.github.mrvilkaman.namegenerator.presentationlayer.app.App;
+import com.github.mrvilkaman.namegenerator.presentationlayer.app.AppComponent;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
 
 import javax.inject.Inject;
@@ -33,7 +35,11 @@ public class InfoScreenFragment extends BaseFragment<InfoPresenter> implements I
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		DaggerInfoComponent.create().inject(this);
+		AppComponent appComponent = App.get(getActivity())
+				.getAppComponent();
+		DaggerInfoComponent.builder()
+				.appComponent(appComponent)
+				.build().inject(this);
 	}
 
 	@Override
