@@ -4,16 +4,16 @@ package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.friendsl
  */
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.github.mrvilkaman.namegenerator.R;
-import com.github.mrvilkaman.namegenerator.domainlayer.interactor.InteractorFactory;
-import com.github.mrvilkaman.namegenerator.domainlayer.usecase.UseCaseFactory;
+import com.github.mrvilkaman.namegenerator.presentationlayer.app.App;
+import com.github.mrvilkaman.namegenerator.presentationlayer.app.AppComponent;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.MySimpleAdapter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.info.InfoScreenFragment;
@@ -22,9 +22,6 @@ import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
 import java.util.List;
 
 import butterknife.Bind;
-
-import static com.github.mrvilkaman.namegenerator.domainlayer.interactor.InteractorFactory.*;
-import static com.github.mrvilkaman.namegenerator.domainlayer.usecase.UseCaseFactory.*;
 
 public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter> implements FriendsListView {
 
@@ -38,6 +35,12 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 
 	public static FriendsListScreenFragment open() {
 		return new FriendsListScreenFragment();
+	}
+
+	protected void daggerInject() {
+		DaggerFriendsListComponent.builder()
+				.appComponent(getAppComponent())
+				.build().inject(this);
 	}
 
 	@Override
@@ -81,11 +84,6 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 	@Override
 	public void renderFriendsList(List<Friend> friends) {
 		adapter.setItems(friends);
-	}
-
-	@Override
-	public FriendsListPresenter newPresenter() {
-		return new FriendsListPresenter(getUserListUseCase(), getSaveLocalUserInteractor());
 	}
 
 	@Override

@@ -5,12 +5,14 @@ package com.github.mrvilkaman.namegenerator.presentationlayer.fragments.hello;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.mrvilkaman.namegenerator.R;
-import com.github.mrvilkaman.namegenerator.domainlayer.interactor.InteractorFactory;
+import com.github.mrvilkaman.namegenerator.presentationlayer.app.App;
+import com.github.mrvilkaman.namegenerator.presentationlayer.app.AppComponent;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.view.BaseFragment;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.friendslist.FriendsListScreenFragment;
 
@@ -29,6 +31,15 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 	}
 
 	@Override
+	protected void daggerInject() {
+		DaggerHelloComponent.builder()
+				.appComponent(getAppComponent())
+				.helloScreenModule(new HelloScreenModule(this))
+				.build()
+				.inject(this);
+	}
+
+	@Override
 	protected int getLayoutId() {
 		return R.layout.layout_helloscreen_fragment;
 	}
@@ -36,11 +47,6 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 	@Override
 	protected void onCreateView(View view, Bundle savedInstanceState) {
 
-	}
-
-	@Override
-	public HelloScreenPresenter newPresenter() {
-		return new HelloScreenPresenter(InteractorFactory.getVkLoginInteractor(this),InteractorFactory.getTokenInteractor());
 	}
 
 	@OnClick(R.id.hello_login_btn)

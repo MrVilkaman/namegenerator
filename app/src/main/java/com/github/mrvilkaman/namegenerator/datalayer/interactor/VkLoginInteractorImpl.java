@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.github.mrvilkaman.namegenerator.domainlayer.interactor.VkLoginInteractor;
-import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProviders;
-import com.github.mrvilkaman.namegenerator.domainlayer.providers.DataProvidersFactory;
+import com.github.mrvilkaman.namegenerator.domainlayer.providers.SchedulersProvider;
 import com.github.mrvilkaman.namegenerator.domainlayer.usecase.HandleTokenUseCase;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
@@ -14,6 +13,10 @@ import com.vk.sdk.api.model.VKScopes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import javax.inject.Inject;
+
+import dagger.Provides;
 
 /**
  * Created by root on 12.03.16.
@@ -25,9 +28,12 @@ public class VkLoginInteractorImpl implements VkLoginInteractor {
 	private static final String KEY_SDK_CUSTOM_INITIALIZE = "arg4";
 
 	private Fragment fragment;
+	private SchedulersProvider scheduler;
 
-	public VkLoginInteractorImpl(Fragment fragment) {
+	@Inject
+	public VkLoginInteractorImpl(Fragment fragment,SchedulersProvider scheduler) {
 		this.fragment = fragment;
+		this.scheduler = scheduler;
 	}
 
 	@Override
@@ -48,7 +54,6 @@ public class VkLoginInteractorImpl implements VkLoginInteractor {
 
 	@Override
 	public HandleTokenUseCase handleVkResponse(int requestCode, int resultCode, Intent data) {
-		DataProviders dataProviders = DataProvidersFactory.get();
-		return new HandleTokenUseCase(requestCode,resultCode,data,dataProviders.getSchedulersProvider());
+		return new HandleTokenUseCase(requestCode,resultCode,data,scheduler);
 	}
 }
