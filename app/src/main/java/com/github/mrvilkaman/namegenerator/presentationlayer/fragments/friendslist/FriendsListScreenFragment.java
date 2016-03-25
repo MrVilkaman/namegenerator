@@ -21,8 +21,6 @@ import com.github.mrvilkaman.namegenerator.presentationlayer.model.Friend;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.Bind;
 
 public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter> implements FriendsListView {
@@ -39,13 +37,9 @@ public class FriendsListScreenFragment extends BaseFragment<FriendsListPresenter
 		return new FriendsListScreenFragment();
 	}
 
-	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		AppComponent appComponent = App.get(getActivity())
-				.getAppComponent();
+	protected void daggerInject() {
 		DaggerFriendsListComponent.builder()
-				.appComponent(appComponent)
+				.appComponent(getAppComponent())
 				.build().inject(this);
 	}
 

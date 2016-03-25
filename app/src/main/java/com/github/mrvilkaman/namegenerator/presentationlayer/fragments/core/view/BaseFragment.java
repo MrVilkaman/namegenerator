@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.github.mrvilkaman.namegenerator.R;
 import com.github.mrvilkaman.namegenerator.presentationlayer.activities.BaseActivityPresenter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.activities.BaseActivityView;
+import com.github.mrvilkaman.namegenerator.presentationlayer.app.App;
+import com.github.mrvilkaman.namegenerator.presentationlayer.app.AppComponent;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.core.presenter.BasePresenter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.fragments.info.InfoPresenter;
 import com.github.mrvilkaman.namegenerator.presentationlayer.utils.IToolbar;
@@ -39,7 +41,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
+		daggerInject();
 	}
 
 	@Override
@@ -66,6 +68,13 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 		if (previousFragment != null) {
 			outState.putString(PREVIOUS_FRAGMENT, previousFragment);
 		}
+	}
+
+	protected abstract void daggerInject();
+
+	protected AppComponent getAppComponent() {
+		return App.get(getActivity())
+				.getAppComponent();
 	}
 
 	@Nullable

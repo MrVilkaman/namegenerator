@@ -33,12 +33,9 @@ public class InfoScreenFragment extends BaseFragment<InfoPresenter> implements I
 	}
 
 	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		AppComponent appComponent = App.get(getActivity())
-				.getAppComponent();
+	protected void daggerInject() {
 		DaggerInfoComponent.builder()
-				.appComponent(appComponent)
+				.appComponent(getAppComponent())
 				.build().inject(this);
 	}
 

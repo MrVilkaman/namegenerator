@@ -31,12 +31,9 @@ public class HelloScreenFragment extends BaseFragment<HelloScreenPresenter> impl
 	}
 
 	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		AppComponent appComponent = App.get(getActivity())
-				.getAppComponent();
+	protected void daggerInject() {
 		DaggerHelloComponent.builder()
-				.appComponent(appComponent)
+				.appComponent(getAppComponent())
 				.helloScreenModule(new HelloScreenModule(this))
 				.build()
 				.inject(this);
